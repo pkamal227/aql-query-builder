@@ -1,0 +1,32 @@
+Edge Function Status
+====================
+
+File: supabase/functions/aql-assistant/index.ts
+Size: 20,956 bytes
+Status: UPDATED with fix - Ready for deployment
+
+Fix Applied (lines 492-498):
+------------------------------
+const exemptFields = ['sourcetype', 'event_time', '_time', 'index', 'host', 'source'];
+const allFields = fields && fields.length > 0 ? [...new Set([...fields, ...exemptFields])] : exemptFields;
+
+const fieldsContext = fields && fields.length > 0
+  ? `Available fields in the dataset: ${allFields.join(", ")}
+
+NOTE: Fields like sourcetype, event_time, _time, index, host, source are metadata fields that are always available.`
+  : "ERROR: No fields available. The user must upload a log file before you can generate queries.";
+
+What This Fixes:
+----------------
+✓ sourcetype is now included in the available fields list sent to AI
+✓ app_type (from uploaded CSV) is also in the list
+✓ AI validation will no longer reject sourcetype or app_type as "not available"
+
+Next Step:
+----------
+The file needs to be deployed to Supabase. Please copy the contents of:
+supabase/functions/aql-assistant/index.ts
+
+And paste into your Supabase Dashboard > Edge Functions > aql-assistant
+
+Or I can help you deploy it if you provide Supabase access.
